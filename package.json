@@ -1,0 +1,21 @@
+{
+  "name": "lambdas",
+  "version": "1.0.0",
+  "scripts": {
+    "prebuild": "rm -rf dist && tsc",
+    "build": "cp package* dist/ && cd dist && npm install --omit=dev",
+    "postbuild": "cd dist && zip -r index.zip * > /dev/null 2>&1",
+    "deploy": "npm run build && aws lambda update-function-code --function-name HillingdonTaskProcessor --zip-file 'fileb://dist/index.zip'",
+    "envUpdate": "./env_update.sh"
+  },
+  "dependencies": {
+    "mssql": "^10.0.2"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-sns": "^3.529.1",
+    "@types/aws-lambda": "^8.10.136",
+    "@types/mssql": "^9.1.5",
+    "esbuild": "^0.20.1",
+    "typescript": "^5.4.2"
+  }
+}
